@@ -147,7 +147,7 @@ resource "aws_security_group" "pvtSG4" {
 
 resource "aws_instance" "web" {
   ami           = "ami-0a606d8395a538502"
-  instance_type = var.instancetype
+  instance_type = var.instance_type
   associate_public_ip_address  =true
   subnet_id = aws_subnet.pubsub1.id
   vpc_security_group_ids = [aws_security_group.pubSG1.id]
@@ -157,15 +157,4 @@ resource "aws_instance" "web" {
   }
 }
 
-resource "aws_instance" "db" {
-  ami           = var.ami_id
-  instance_type = var.instance_type
-  #associate_public_ip_address  =true
-  subnet_id = aws_subnet.subpvt.id
-  vpc_security_group_ids = [aws_security_group.pvtSG4.id]
-
-  tags = {
-    Name = "Pvt-server"
-  }
-}
 
