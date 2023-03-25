@@ -85,7 +85,7 @@ resource "aws_eip" "eip1" {
 #NAT GATEWAY
 resource "aws_nat_gateway" "nat1" {
   allocation_id = aws_eip.eip1.id
-  subnet_id     = aws_subnet.pubsub1.id
+  subnet_id     = aws_subnet.pvvtsub1.id
 
   tags = {
     Name = "T-NAT-1"
