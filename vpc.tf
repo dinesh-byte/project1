@@ -32,13 +32,12 @@ resource "aws_subnet" "pubsub1" {
 resource "aws_subnet" "pvtsub1" {
   vpc_id            = aws_vpc.myvpc.id
   cidr_block        = var.cidr_blockpvtsub1
-  availability_zone = var.availability_zone1
+  availability_zone = var.availability_zone2
 
   tags = {
     Name = "MY-PVT-SUB-1"
   }
 }
-
 #Route Tables
 resource "aws_route_table" "pubrt1" {
   vpc_id = aws_vpc.myvpc.id
@@ -52,7 +51,6 @@ resource "aws_route_table" "pubrt1" {
     Name = "RTPUB1"
   }
 }
-
 
 resource "aws_route_table" "pvtrt1" {
   vpc_id = aws_vpc.myvpc.id
@@ -151,7 +149,7 @@ resource "aws_instance" "web" {
   ami           = "ami-0a606d8395a538502"
   instance_type = var.instancetype
   associate_public_ip_address  =true
-  subnet_id = aws_subnet.subpub.id
+  subnet_id = aws_subnet.pubsub1.id
   vpc_security_group_ids = [aws_security_group.pubSG1.id]
 
   tags = {
@@ -164,7 +162,7 @@ resource "aws_instance" "db" {
   instance_type = var.instance_type
   #associate_public_ip_address  =true
   subnet_id = aws_subnet.subpvt.id
-  vpc_security_group_ids = [aws_security_group.pubSG4.id]
+  vpc_security_group_ids = [aws_security_group.pvtSG4.id]
 
   tags = {
     Name = "Pvt-server"
